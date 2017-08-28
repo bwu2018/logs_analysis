@@ -1,43 +1,26 @@
-#Purpose
-Log project for Full Stack Nanodegree
+# Purpose
+To learn how to use psycopg2 to query a mock PostgreSQL database for a fictional news website.  
 
-#How to run
-##Load the database from file
+# How to run
+## Download database file and unzip
+https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
+
+## Load the database from file
 ```
 psql -d news -f newsdata.sql
 ```
 
-##Connect
+## Connect
 ```
 psql -d news
 ```
 
-##Create Views
+## Create Views
 ```
-create view time_view as
-select date(time), count(*) as views
-from log
-group by date(time)
-order by date(time);
+psql -d news -f create_views.sql
 ```
 
-```
-create view total_error as
-select date(time), count(*) as errors
-from log where status = '404 not found'
-group by date(time)
-order by date(time);
-```
-
-```
-create view error as
-select time_view.date, (100.0*total_error.errors/time_view.views) as percentage
-from time_view, total_error
-where time_view.date = total_error.date
-order by time_view.date;
-```
-
-##Run
+## Run
 ```
 python log.py
 ```
