@@ -32,34 +32,34 @@ def query(thing):
         data = c.fetchall()
         db.close()
         return data
-    except:
-        print ("There was an error")
+     except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
 
 
 def question1():
-    #Answer to question 1
+    """Prints top three most popular articles"""
     print "1. What are the most popular three articles of all time?"
     q1 = query(question_1)
-    for i in range(0, len(q1)):
-        print "\"" + q1[i][0] + "\" - " + str(q1[i][1]) + " views"
+    for title, views in q1:
+        print('\"{}\" - {} views'.format(title, views))
     print("\n")
 
 
 def question2():
-    #Answer to question 2
+    """Prints most popular article authors"""
     print "2. Who are the most popular article authors of all time?"
     q2 = query(question_2)
-    for i in range(0, len(q2)):
-        print "\"" + q2[i][0] + "\" - " + str(q2[i][1]) + " views"
+    for title, views in q2:
+        print('\"{}\" - {} views'.format(title, views))
     print("\n")
 
 
 def question3():
-    #Answer to question 3
+    """Prints when error was more than 1%"""
     print "3. On which days did more than 1% of requests lead to errors?"
     q3 = query(question_3)
     for i in range(0, len(q3)):
-        print str(q3[i][0])+ " - "+str(round(q3[i][3], 2))+"% errors"
+        print str(q3[i][0]) + " - " + str(round(q3[i][1], 2)) + "% errors"
     print("\n")
 
 
